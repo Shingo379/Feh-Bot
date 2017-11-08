@@ -1,0 +1,11 @@
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\bin\Debug\netcoreapp2.0\feh-bot.deps.json
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\bin\Debug\netcoreapp2.0\feh-bot.runtimeconfig.json
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\bin\Debug\netcoreapp2.0\feh-bot.runtimeconfig.dev.json
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\bin\Debug\netcoreapp2.0\feh-bot.dll
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\bin\Debug\netcoreapp2.0\feh-bot.pdb
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.csprojResolveAssemblyReference.cache
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.csproj.CoreCompileInputs.cache
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.AssemblyInfoInputs.cache
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.AssemblyInfo.cs
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.dll
+C:\Users\Shingo\source\repos\feh-bot\feh-bot\obj\Debug\netcoreapp2.0\feh-bot.pdb

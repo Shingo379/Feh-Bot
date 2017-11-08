@@ -1,0 +1,11 @@
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\bin\Debug\netcoreapp2.0\Feh Bot Heroku.deps.json
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\bin\Debug\netcoreapp2.0\Feh Bot Heroku.runtimeconfig.json
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\bin\Debug\netcoreapp2.0\Feh Bot Heroku.runtimeconfig.dev.json
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\bin\Debug\netcoreapp2.0\Feh Bot Heroku.dll
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.csprojResolveAssemblyReference.cache
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.csproj.CoreCompileInputs.cache
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.AssemblyInfoInputs.cache
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.AssemblyInfo.cs
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\bin\Debug\netcoreapp2.0\Feh Bot Heroku.pdb
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.dll
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\obj\Debug\netcoreapp2.0\Feh Bot Heroku.pdb

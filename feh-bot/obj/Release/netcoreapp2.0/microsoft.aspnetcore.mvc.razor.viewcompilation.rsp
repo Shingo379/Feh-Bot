@@ -1,0 +1,12 @@
+C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=Feh Bot Heroku
+--content-root=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\About.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\Contact.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\Error.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\Index.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\_Layout.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\_ValidationScriptsPartial.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\_ViewImports.cshtml
+--file=C:\Users\Shingo\source\repos\Feh Bot Heroku\Feh Bot Heroku\Pages\_ViewStart.cshtml
