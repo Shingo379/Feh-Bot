@@ -217,6 +217,7 @@ public class VotingModule : ModuleBase<SocketCommandContext>
         else
         {
             SetupGauntlet();
+            Console.WriteLine("SETUP");
             string date = result.Substring(result.IndexOf("tournaments-date") + 18, result.IndexOf('~') - (result.IndexOf("tournaments-date") + 18));
             string[] dateSplit = date.Split(new char[] { ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
             DateTime round1Start = new DateTime(DateTime.UtcNow.Year, Int32.Parse(dateSplit[0]), Int32.Parse(dateSplit[1]), 7, 0, 0);

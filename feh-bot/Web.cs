@@ -323,7 +323,7 @@ public class WebConnection
         HttpResponseMessage response = await client.GetAsync("https://support.fire-emblem-heroes.com/voting_gauntlet/current?locale=en-US");
         if (response.IsSuccessStatusCode)
         {
-            result = (await response.Content.ReadAsStringAsync()).Split('\n')[9];
+            result = (await response.Content.ReadAsStringAsync()).Split('\n')[10];
         }
         result = result.Substring(result.IndexOf("tournament-01", 0, StringComparison.Ordinal));
         string[] names = result.Split(new string[] { "\"name\">" }, StringSplitOptions.None);

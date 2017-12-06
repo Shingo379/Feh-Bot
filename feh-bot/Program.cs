@@ -109,9 +109,13 @@ public class Program
         try
         {
             await WebConnection.GetAllCharacters();
+            Console.WriteLine("Got Characters");
             await WebConnection.GetAllBanners();
+            Console.WriteLine("Got Banners");
             Heroes.GetHeroRarityLists();
+            Console.WriteLine("Set Rarities");
             await VotingModule.CheckOngoing();
+            Console.WriteLine("Voting Gauntlet Checked");
             TimeSpan interval = ((new TimeSpan(0, 8, 0, 0) - DateTime.UtcNow.TimeOfDay) < DateTime.UtcNow.TimeOfDay ? new TimeSpan(1, 8, 0, 0) - DateTime.UtcNow.TimeOfDay : new TimeSpan(0, 8, 0, 0) - DateTime.UtcNow.TimeOfDay);
             Console.WriteLine("Daily Check in: " + interval);
             dailyUpdate.Change(interval, Timeout.InfiniteTimeSpan);

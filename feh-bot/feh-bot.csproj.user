@@ -7,6 +7,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
+    <ActiveDebugProfile>Feh_Bot_Heroku</ActiveDebugProfile>
   </PropertyGroup>
 </Project>
