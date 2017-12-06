@@ -54,8 +54,22 @@ public class Postgres
 
     public static async Task AddGauntletHeroes(List<string> heroes)
     {
-        Console.WriteLine("ADDING GAUNTLETHEROES TO DATABASE");
         string command =
+            "SELECT Name FROM GauntletHero WHERE ID=0";
+        com.CommandText = command;
+        string firstHero = (string)(await com.ExecuteScalarAsync());
+        if (firstHero == heroes[0])
+        {
+            return;
+        }
+        else if (firstHero == "")
+        { }
+        else if (firstHero != heroes[0])
+        {
+            await ClearTables();
+        }
+        Console.WriteLine("ADDING GAUNTLETHEROES TO DATABASE");
+        command =
             "INSERT INTO GauntletHero(ID, Name)\n" +
             "VALUES";
         for (int i = 0; i < heroes.Count; i++)
@@ -175,5 +189,20 @@ public class Postgres
             teams.Add(reader[0].ToString());
         }
         return teams;
+    }
+
+    public static async Task ClearTables()
+    {
+        string command = "DELETE * FROM Users";
+        com.CommandText = command;
+        await com.ExecuteScalarAsync();
+
+        command = "DELETE * FROM HeroToUser";
+        com.CommandText = command;
+        await com.ExecuteScalarAsync();
+
+        command = "DELETE * FROM GauntletHero";
+        com.CommandText = command;
+        await com.ExecuteScalarAsync();
     }
 }
