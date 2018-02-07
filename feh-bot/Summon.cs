@@ -17,7 +17,7 @@ public class Banner
     public Banner()
     {
         Heroes = new List<Hero>();
-        rates = new double[4];
+        rates = new double[5] { 0, 0, 0, 0, 0 };
     }
 
     public string BannerToString()
@@ -68,18 +68,34 @@ public static class Summoner
 
         Queue<Tuple<string, Hero>> summonResults = new Queue<Tuple<string, Hero>>();
         Banner focusBanner = BannersDictionary[banner];
+        List<Hero> fiveStarHeroes = Heroes.fiveStarHeroes.Where(h => h.poolDate <= focusBanner.StartDate).ToList();
+        List<Hero> fourStarHeroes = Heroes.fourStarHeroes.Where(h => h.poolDate <= focusBanner.StartDate).ToList();
+        List<Hero> threeStarHeroes = Heroes.threeStarHeroes.Where(h => h.poolDate <= focusBanner.StartDate).ToList();
 
-        double focusBase = focusBanner.rates[0];
+        double fiveFocusBase = focusBanner.rates[0];
         double fiveStarBase = focusBanner.rates[1];
-        double fourStarBase = focusBanner.rates[2];
-        double threeStarBase = focusBanner.rates[3];
-        double focus = focusBase;
+        double fourFocusBase;
+        double fourStarBase;
+        double threeStarBase;
+        if (focusBanner.rates[4] == 0)
+        {
+            fourFocusBase = 0;
+            fourStarBase = focusBanner.rates[2];
+            threeStarBase = focusBanner.rates[3];
+        }
+        else
+        {
+            fourFocusBase = focusBanner.rates[2];
+            fourStarBase = focusBanner.rates[3];
+            threeStarBase = focusBanner.rates[4];
+        }
+        double fiveFocus = fiveFocusBase;
         double fiveStar = fiveStarBase;
+        double fourFocus = fourFocusBase;
         double fourStar = fourStarBase;
         double threeStar = threeStarBase;
 
         Random rng = new Random();
-        bool[] raritiesObtained = new bool[4]; //[0] = 3*, [1] = 4*, [2] = 5*, [3] = 5* Focus 
         bool reset = false;
         int rounds = 1 + (times - 1) / 5;
 
@@ -87,31 +103,32 @@ public static class Summoner
         {
             //First calculates the rarity summoned, then picks a random hero from that rarity list.
             double outcome = rng.NextDouble();
-            if (outcome <= focus)
+            if (outcome <= fiveFocus)
             {
                 int r = rng.Next(0, focusBanner.Heroes.Count);
                 summonResults.Enqueue(new Tuple<string, Hero>("5* Focus: ", focusBanner.Heroes[r]));
-                raritiesObtained[3] = true;
                 reset = true;
             }
-            else if (outcome <= focus + fiveStar)
+            else if (outcome <= fiveFocus + fiveStar)
             {
-                int r = rng.Next(0, Heroes.fiveStarHeroes.Count - 1);
-                summonResults.Enqueue(new Tuple<string, Hero>("5*: ", Heroes.fiveStarHeroes[r]));
-                raritiesObtained[2] = true;
+                int r = rng.Next(0, fiveStarHeroes.Count - 1);
+                summonResults.Enqueue(new Tuple<string, Hero>("5*: ", fiveStarHeroes[r]));
                 reset = true;
             }
-            else if (outcome <= focus + fiveStar + fourStar)
+            else if (outcome <= fiveFocus + fiveStar + fourFocus)
             {
-                int r = rng.Next(0, Heroes.fourStarHeroes.Count - 1);
-                summonResults.Enqueue(new Tuple<string, Hero>("4*: ", Heroes.fourStarHeroes[r]));
-                raritiesObtained[1] = true;
+                int r = rng.Next(0, focusBanner.Heroes.Count);
+                summonResults.Enqueue(new Tuple<string, Hero>("4* Focus: ", focusBanner.Heroes[r]));
+            }
+            else if (outcome <= fiveFocus + fiveStar + fourFocus + fourStar)
+            {
+                int r = rng.Next(0, fourStarHeroes.Count - 1);
+                summonResults.Enqueue(new Tuple<string, Hero>("4*: ", fourStarHeroes[r]));
             }
             else
             {
-                int r = rng.Next(0, Heroes.threeStarHeroes.Count - 1);
-                summonResults.Enqueue(new Tuple<string, Hero>("3*: ", Heroes.threeStarHeroes[r]));
-                raritiesObtained[0] = true;
+                int r = rng.Next(0, threeStarHeroes.Count - 1);
+                summonResults.Enqueue(new Tuple<string, Hero>("3*: ", threeStarHeroes[r]));
             }
             summonedHeroes += 1;
 
@@ -144,19 +161,22 @@ public static class Summoner
                     if (reset)
                     {
                         //If a 5* or 5* Focus character is summoned, the summoning rates return to their base values
-                        focus = focusBase;
+                        fiveFocus = fiveFocusBase;
                         fiveStar = fiveStarBase;
+                        fourFocus = fourFocusBase;
                         fourStar = fourStarBase;
                         reset = false;
                     }
                     else
                     {
                         //If no 5* or 5* Focus Heroes are summoned five times in a row, the rates of getting a 5* and 5* Focus is increased by .5% split between the two.
-                        int pityRounds = Convert.ToInt32(((focus - focusBase) + (fiveStar - fiveStarBase)) / .005) + 1;
-                        focus = Math.Round(focusBase + (.005 * pityRounds * (focusBase / (focusBase + fiveStarBase))), 4);
-                        fiveStar = Math.Round(fiveStarBase + (.005 * pityRounds * (fiveStarBase / (focusBase + fiveStarBase))), 4);
-                        fourStar = Math.Round(fourStarBase - (.005 * pityRounds * (fourStarBase / (fourStarBase + threeStarBase))), 4);
-                        threeStar = Math.Round(threeStarBase - (.005 * pityRounds * (threeStarBase / (fourStarBase + threeStarBase))), 4);
+                        int pityRounds = Convert.ToInt32(((fiveFocus - fiveFocusBase) + (fiveStar - fiveStarBase)) / .005) + 1;
+                        fiveFocus = Math.Round(fiveFocusBase + (.005 * pityRounds * (fiveFocusBase / (fiveFocusBase + fiveStarBase))), 4);
+                        fiveStar = Math.Round(fiveStarBase + (.005 * pityRounds * (fiveStarBase / (fiveFocusBase + fiveStarBase))), 4);
+                        fourFocus = Math.Round(fourFocusBase - (.005 * pityRounds * (fourFocusBase / (fourFocusBase + fourStarBase + threeStarBase))), 4);
+                        fourStar = Math.Round(fourStarBase - (.005 * pityRounds * (fourStarBase / (fourFocusBase + fourStarBase + threeStarBase))), 4);
+                        threeStar = Math.Round(threeStarBase - (.005 * pityRounds * (threeStarBase / (fourFocusBase + fourStarBase + threeStarBase))), 4);
+                        Console.WriteLine(fiveFocus);
                     }
                 }
             }

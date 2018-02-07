@@ -114,11 +114,19 @@ public class Program
             Console.WriteLine("Got Banners");
             Heroes.GetHeroRarityLists();
             Console.WriteLine("Set Rarities");
-            await VotingModule.CheckOngoing();
-            Console.WriteLine("Voting Gauntlet Checked");
             TimeSpan interval = ((new TimeSpan(0, 8, 0, 0) - DateTime.UtcNow.TimeOfDay) < DateTime.UtcNow.TimeOfDay ? new TimeSpan(1, 8, 0, 0) - DateTime.UtcNow.TimeOfDay : new TimeSpan(0, 8, 0, 0) - DateTime.UtcNow.TimeOfDay);
             Console.WriteLine("Daily Check in: " + interval);
             dailyUpdate.Change(interval, Timeout.InfiniteTimeSpan);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        try
+        {
+            Console.WriteLine("Checking Gauntlet");
+            await VotingModule.CheckOngoing();
+            Console.WriteLine("Voting Gauntlet Checked");
         }
         catch (Exception e)
         {

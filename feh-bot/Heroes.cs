@@ -12,8 +12,8 @@ public struct Hero
     public string color;
     public string weapontype;
     public string movetype;
-    public bool isSpecialHero;
     public DateTime releaseDate;
+    public DateTime poolDate;
 
     //string array of stats. [0] = ATK, [1] = DEF, [2] = HP, [3] = RES, [4] = SPD
     public string[] R3Lv1Bane;
@@ -124,6 +124,34 @@ public struct Hero
         };
     }
 
+    public void AddStats(int rarity, bool lv40, string variation, string[] newStats)
+    {
+        int index = -1;
+        if (variation == "Bane")
+        {
+            index = 0;
+        }
+        else if (variation == "Neut")
+        {
+            index = 1;
+        }
+        else if (variation == "Boon")
+        {
+            index = 2;
+        }
+        if (lv40)
+        {
+            index += 3;
+        }
+        int rarityIndex = rarity - 3;
+        stats[rarityIndex][index] = newStats;
+    }
+
+    public void AddSkills(string[][] newSkills, string[][] newSkillUnlocks)
+    {
+
+    }
+
     public string GetStatString(int rarity = 5, int level = 40, string mod1 = "", string mod2 = "")
     {
         int rarityIndex = rarity - 3; //index of rarities 3, 4, 5 are 0, 1, 2
@@ -214,7 +242,7 @@ public static class Heroes
     {
         threeStarHeroes = HeroDictionary.Where(kv => kv.Value.rarity.Contains("3")).Select(kv => kv.Value).ToList();
         fourStarHeroes = HeroDictionary.Where(kv => kv.Value.rarity.Contains("4")).Select(kv => kv.Value).ToList();
-        fiveStarHeroes = HeroDictionary.Where(kv => kv.Value.rarity.Contains("5") && !kv.Value.isSpecialHero).Select(kv => kv.Value).ToList();
+        fiveStarHeroes = HeroDictionary.Where(kv => kv.Value.rarity.Contains("5") && kv.Value.poolDate!=DateTime.UtcNow).Select(kv => kv.Value).ToList();
     }
 
     public static string GetHero(string name, int rarity, int level, string mod1, string mod2)

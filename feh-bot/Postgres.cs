@@ -66,6 +66,7 @@ public class Postgres
         { }
         else if (firstHero != heroes[0])
         {
+            Console.WriteLine("NEW GAUNTLET HEROES");
             await ClearTables();
         }
         Console.WriteLine("ADDING GAUNTLETHEROES TO DATABASE");
@@ -83,7 +84,7 @@ public class Postgres
         com.CommandText = command;
         try
         {
-            await com.ExecuteReaderAsync();
+            await com.ExecuteScalarAsync();
         }
         catch(Exception e)
         {
@@ -193,15 +194,15 @@ public class Postgres
 
     public static async Task ClearTables()
     {
-        string command = "DELETE * FROM Users";
+        string command = "DELETE FROM HeroToUser;";
         com.CommandText = command;
         await com.ExecuteScalarAsync();
 
-        command = "DELETE * FROM HeroToUser";
+        command = "DELETE FROM Users;";
         com.CommandText = command;
         await com.ExecuteScalarAsync();
 
-        command = "DELETE * FROM GauntletHero";
+        command = "DELETE FROM GauntletHero;";
         com.CommandText = command;
         await com.ExecuteScalarAsync();
     }

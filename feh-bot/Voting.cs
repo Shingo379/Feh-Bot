@@ -163,7 +163,8 @@ public class VotingModule : ModuleBase<SocketCommandContext>
         }
         else if (latestRound == "Round has ended. Currently calculating results.")
         {
-            TimeSpan oneHour = new TimeSpan(1 + DateTime.UtcNow.Hour, 4, 0) - DateTime.UtcNow.TimeOfDay;
+            TimeSpan oneHour = new TimeSpan(1 + DateTime.UtcNow.Hour, 5, 0) - DateTime.UtcNow.TimeOfDay;
+            gauntletAlertClock.Change(oneHour, new TimeSpan(-1));
             Console.WriteLine("Round ended. Next alert: " + oneHour);
             return;
         }
@@ -194,7 +195,7 @@ public class VotingModule : ModuleBase<SocketCommandContext>
             }
         }
 
-        TimeSpan interval = new TimeSpan(1 + DateTime.UtcNow.Hour, 4, 0) - DateTime.UtcNow.TimeOfDay;
+        TimeSpan interval = new TimeSpan(1 + DateTime.UtcNow.Hour, 5, 0) - DateTime.UtcNow.TimeOfDay;
         Console.WriteLine("Next alert: " + interval);
         gauntletAlertClock.Change(interval, new TimeSpan(-1));
     }
@@ -221,15 +222,15 @@ public class VotingModule : ModuleBase<SocketCommandContext>
             string date = result.Substring(result.IndexOf("tournaments-date") + 18, result.IndexOf('~') - (result.IndexOf("tournaments-date") + 18));
             string[] dateSplit = date.Split(new char[] { ' ', '/' }, StringSplitOptions.RemoveEmptyEntries);
             DateTime round1Start = new DateTime(DateTime.UtcNow.Year, Int32.Parse(dateSplit[0]), Int32.Parse(dateSplit[1]), 7, 0, 0);
-            if (DateTime.UtcNow > round1Start)
+            if (DateTime.UtcNow > round1Start || (DateTime.UtcNow.Month == 1 && round1Start.Month == 12))
             {
-                Console.WriteLine("Starting alerts: " + (new TimeSpan(1 + DateTime.UtcNow.Hour, 3, 0) - DateTime.UtcNow.TimeOfDay));
-                gauntletAlertClock.Change(new TimeSpan(1 + DateTime.UtcNow.Hour, 4, 0) - DateTime.UtcNow.TimeOfDay, new TimeSpan(-1));
+                Console.WriteLine("Starting alerts: " + (new TimeSpan(1 + DateTime.UtcNow.Hour, 5, 0) - DateTime.UtcNow.TimeOfDay));
+                gauntletAlertClock.Change(new TimeSpan(1 + DateTime.UtcNow.Hour, 5, 0) - DateTime.UtcNow.TimeOfDay, new TimeSpan(-1));
             }
             else
             {
-                gauntletStartClock.Change((round1Start.AddMinutes(4) - DateTime.UtcNow), new TimeSpan(-1));
-                Console.WriteLine("Round 1 Starts in: " + (round1Start.AddMinutes(4) - DateTime.UtcNow).ToString());
+                gauntletStartClock.Change((round1Start.AddMinutes(5) - DateTime.UtcNow), new TimeSpan(-1));
+                Console.WriteLine("Round 1 Starts in: " + (round1Start.AddMinutes(5) - DateTime.UtcNow).ToString());
             }
         }
     }
@@ -253,18 +254,20 @@ public class VotingModule : ModuleBase<SocketCommandContext>
         }
         for (int i = 1; i < (battles + 1); i += 2)
         {
-            string leftID = combatants[i].Substring(7, 1);
-            string leftStatus = combatants[i].Substring(9, 6);
+            int startIndex = combatants[i].Substring(0, 12).LastIndexOf('-');
+            string leftID = combatants[i].Substring(startIndex - 1, 1);
+            string leftStatus = combatants[i].Substring(startIndex + 1, 6);
             int nameIndex = combatants[i].IndexOf("\"name\"") + 7;
             int nameLength = combatants[i].IndexOf("</p") - nameIndex;
-            string leftName = combatants[i].Substring(nameIndex, combatants[i].IndexOf("</p") - nameIndex);
+            string leftName = combatants[i].Substring(nameIndex, nameLength);
             string leftScore = combatants[i].Substring(nameIndex + nameLength + 7, combatants[i].IndexOf("</p></div>") - (nameIndex + nameLength + 7));
 
-            string rightID = combatants[i + 1].Substring(7, 1);
-            string rightStatus = combatants[i + 1].Substring(9, 6);
+            startIndex = combatants[i + 1].Substring(0, 12).LastIndexOf('-');
+            string rightID = combatants[i + 1].Substring(startIndex - 1, 1);
+            string rightStatus = combatants[i + 1].Substring(startIndex + 1, 6);
             nameIndex = combatants[i + 1].IndexOf("\"name\"") + 7;
             nameLength = combatants[i + 1].IndexOf("</p") - nameIndex;
-            string rightName = combatants[i + 1].Substring(nameIndex, combatants[i + 1].IndexOf("</p") - nameIndex);
+            string rightName = combatants[i + 1].Substring(nameIndex, nameLength);
             string rightScore = combatants[i + 1].Substring(nameIndex + nameLength + 7, combatants[i + 1].IndexOf("</p></div>") - (nameIndex + nameLength + 7));
 
             if (leftStatus == "behind")
